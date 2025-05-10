@@ -7,8 +7,8 @@ resource "aws_ecs_service" "frontend_service" {
 
   load_balancer {
     target_group_arn = aws_lb_target_group.frontend_tg.arn
-    container_name   = "frontend"  
-    container_port   = 3000        
+    container_name   = "frontend"
+    container_port   = 3000
   }
 
   network_configuration {
@@ -17,13 +17,12 @@ resource "aws_ecs_service" "frontend_service" {
     security_groups  = [aws_security_group.frontend_security_group.id]
   }
 
- 
   force_new_deployment = true
 
   depends_on = [
     aws_ecs_cluster.my_cluster,
     aws_ecs_task_definition.frontend,
-    aws_lb_listener.frontend_listener  
+    aws_lb_listener.frontend_listener
   ]
 }
 

@@ -1,9 +1,13 @@
+# Application Load Balancer (ALB) for frontend
 resource "aws_lb" "frontend_alb" {
   name               = "frontend-alb"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.frontend_security_group.id]
-  subnets            = [aws_subnet.ecs_subnet.id, aws_subnet.ecs_subnet2.id] # Updated to include both subnets
+  subnets            = [
+    aws_subnet.ecs_subnet.id,
+    aws_subnet.ecs_subnet2.id
+  ]
 
   enable_deletion_protection = false
 
@@ -12,7 +16,7 @@ resource "aws_lb" "frontend_alb" {
   }
 }
 
-
+# Target Group for ALB
 resource "aws_lb_target_group" "frontend_tg" {
   name     = "frontend-tg"
   port     = 3000
@@ -20,18 +24,19 @@ resource "aws_lb_target_group" "frontend_tg" {
   vpc_id   = aws_vpc.main.id
 
   health_check {
-    path                = "/" 
+    path                = "/"
     protocol            = "HTTP"
     healthy_threshold   = 2
     unhealthy_threshold = 2
     timeout             = 5
     interval            = 30
-    matcher             = "200" 
+    matcher             = "200"
   }
 
   target_type = "ip"
 }
 
+# Listener to route traffic to the target group
 resource "aws_lb_listener" "frontend_listener" {
   load_balancer_arn = aws_lb.frontend_alb.arn
   port              = 80

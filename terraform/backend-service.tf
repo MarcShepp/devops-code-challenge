@@ -6,7 +6,7 @@ resource "aws_ecs_service" "backend_service" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    assign_public_ip = false  
+    assign_public_ip = false
     subnets          = [aws_subnet.ecs_private_subnet.id]
     security_groups  = [aws_security_group.backend_security_group.id]
   }

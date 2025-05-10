@@ -10,7 +10,7 @@ resource "aws_ecs_task_definition" "backend" {
   container_definitions = jsonencode([
     {
       name      = "backend"
-      image     = "289953284546.dkr.ecr.us-east-1.amazonaws.com/my-application-repo:backend" # Update with your ECR image URI
+      image     = "289953284546.dkr.ecr.us-east-1.amazonaws.com/my-application-repo:backend" # Ensure this is correct ECR URI
       cpu       = 512
       memory    = 1024
       essential = true
@@ -19,15 +19,20 @@ resource "aws_ecs_task_definition" "backend" {
           containerPort = 8080
           hostPort      = 8080
           protocol      = "tcp"
-        },
+        }
       ],
       environment = [
         {
           name  = "NODE_ENV"
           value = "production"
-        },
-      ],
+        }
+      ]
     }
   ])
+
+  tags = {
+    Name        = "backend-task-definition"
+    Environment = "dev"
+  }
 }
 
