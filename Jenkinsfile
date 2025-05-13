@@ -4,7 +4,7 @@ pipeline {
         // AWS Region
         AWS_DEFAULT_REGION = 'us-east-1'
         // Your AWS account ID
-        AWS_ACCOUNT_ID = '289953123456'
+        AWS_ACCOUNT_ID = '577638383588'
         // ECR repository name
         ECR_REPOSITORY = 'my-application-repo'
         // ECS service names
