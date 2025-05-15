@@ -1,19 +1,19 @@
 pipeline {
     agent any
     environment {
-        // AWS Region
         AWS_DEFAULT_REGION = 'us-east-1'
-        // Your AWS account ID
         AWS_ACCOUNT_ID = '577638383588'
-        // ECR repository name
         ECR_REPOSITORY = 'my-application-repo'
-        // ECS service names
         FRONTEND_SERVICE_NAME = 'frontend-service'
         BACKEND_SERVICE_NAME = 'backend-service'
-        // ECS cluster name
         ECS_CLUSTER_NAME = 'my-cluster'
     }
     stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
         stage('Build Docker Images') {
             steps {
                 script {
